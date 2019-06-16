@@ -9,11 +9,11 @@ function convert($inputPath) {
     cd $inputPath
     
     $i = 0
-    foreach($l in ls -r | where { $_.Name -match ".png|.bmp" } ){
+    foreach($l in ls -r | where { $_.Name -match ".jpg|.bmp|.jpeg" } ){
         $target = $inputPath + $l
         $image = [System.Drawing.Image]::FromFile($target)
-        #jpg変換
-        $image.Save((pwd).Path + "\convertAfter" + $i + ".jpg", [System.Drawing.Imaging.ImageFormat]::Jpeg)
+        #png変換
+        $image.Save((pwd).Path + "\convertAfter" + $i + ".png", [System.Drawing.Imaging.ImageFormat]::png)
         $image.Dispose()
         
         #png/bmpファイルを削除
@@ -22,7 +22,7 @@ function convert($inputPath) {
     }
     
     #画像名変換
-    ls | % {$i = 1} { $NewName = "replace_{0:00}.jpg" -f $i, $_.Name ; mv $_.Name $NewName; $i++ }
+    ls | % {$i = 1} { $NewName = "replace_{0:00}.png" -f $i, $_.Name ; mv $_.Name $NewName; $i++ }
 }
 
 #プロパティの呼び出し
